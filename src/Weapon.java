@@ -21,7 +21,5 @@ public class Weapon extends Item {
     public void displayInfo() {
         System.out.println("Weapon: " + getName() + ", Quantity: " + getQuantity() + ", Damage: " + getDamage() + ", Type: " + getType());
     }
-
-
 }
 

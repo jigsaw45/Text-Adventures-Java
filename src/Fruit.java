@@ -15,6 +15,5 @@ public class Fruit extends Item {
     public void displayInfo(){
         System.out.println("Fruit: " + getName() + ", Quantity: " + getQuantity() + ", Type: " + type);
     }
-    //@overide creates a diffrent variable for each class its in
 }
 

@@ -27,4 +27,34 @@ public class Game {
             handleCommand(cmd);
         }
     }
+    public void handleCommand(Command cmd){
+        // Basic dispatcher: look, go, take, drop, inventory, help, quit
+        switch(cmd.getVerb()){
+            case "look":
+                System.out.println(player.getCurrentRoom());
+                break;
+            case "go":
+                break;
+            case "move":
+                if(cmd.hasNoun()){
+                    Room next = player.getCurrentRoom();
+                    if(next != null){
+                        player.setCurrentRoom(next);
+                        System.out.println(player.getCurrentRoom());
+                    }else{
+                        System.out.println("You cant go that way!");
+                    }
+                }else{
+                    System.out.println("Go where?");
+                }
+                break;
+            case "quit":
+                running = false;
+                System.out.println("Goodbye.");
+                break;
+            default:
+                System.out.println("invalid command!");
+        }
+
+    }
 }
