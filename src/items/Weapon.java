@@ -1,3 +1,5 @@
+package items;
+
 public class Weapon extends Item {
     // extends item makes it an item subclass so it shares private variables
     private int damage;
@@ -19,7 +21,7 @@ public class Weapon extends Item {
     }
 
     public void displayInfo() {
-        System.out.println("Weapon: " + getName() + ", Quantity: " + getQuantity() + ", Damage: " + getDamage() + ", Type: " + getType());
+        System.out.println("items.Weapon: " + getName() + ", Quantity: " + getQuantity() + ", Damage: " + getDamage() + ", Type: " + getType());
     }
 }
 

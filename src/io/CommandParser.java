@@ -1,3 +1,5 @@
+package io;
+
 public class CommandParser {
     public static Command parse(String input){
         if(input == null){

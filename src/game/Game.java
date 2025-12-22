@@ -1,4 +1,12 @@
+package game;
+
+import io.Command;
+import io.CommandParser;
+import player.Player;
+import world.Room;
+
 import java.util.Scanner;
+
 public class Game {
     private Player player;
     private boolean running = true;
@@ -9,10 +17,10 @@ public class Game {
     }
 
     private void setupworld(){
-        Room r1 = new Room("room 1", "this is room 1");
-        Room r2 = new Room("room 2", "this is room 2");
-        Room r3 = new Room("room 3", "this is room 3");
-        player = new Player("Player", r1);
+        world.Room r1 = new Room("room 1", "this is room 1");
+        world.Room r2 = new Room("room 2", "this is room 2");
+        world.Room r3 = new Room("room 3", "this is room 3");
+        player = new Player("player", r1);
     }
 
     public void start() {
@@ -55,6 +63,5 @@ public class Game {
             default:
                 System.out.println("invalid command!");
         }
-
     }
 }

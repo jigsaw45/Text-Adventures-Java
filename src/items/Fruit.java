@@ -1,3 +1,5 @@
+package items;
+
 public class Fruit extends Item {
 
     private String type;
@@ -5,7 +7,7 @@ public class Fruit extends Item {
     public Fruit(String name, int quantity, String type) {
         super(name, quantity);
         this.type = type;
-        //subclass of Item
+        //subclass of items.Item
     }
     public String getType() {
         return type;
@@ -13,7 +15,7 @@ public class Fruit extends Item {
 
 
     public void displayInfo(){
-        System.out.println("Fruit: " + getName() + ", Quantity: " + getQuantity() + ", Type: " + type);
+        System.out.println("items.Fruit: " + getName() + ", Quantity: " + getQuantity() + ", Type: " + type);
     }
 }
 

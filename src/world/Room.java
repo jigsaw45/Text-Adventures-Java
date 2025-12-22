@@ -1,4 +1,5 @@
-import java.util.Scanner;
+package world;
+
 public class Room {
     private String name;
     private String description;

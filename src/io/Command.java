@@ -1,3 +1,5 @@
+package io;
+
 public class Command {
     private String verb;
     private String noun;

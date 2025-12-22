@@ -1,3 +1,7 @@
+package items;
+
+import player.Player;
+
 public class Itemtest {
     private String name;
     private String description;
