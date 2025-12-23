@@ -7,24 +7,35 @@ public class Stats {
     private int focus;
     private int stamina;
     private int mastery;
+    private int basePower;
+    private int momentum;
     private int level;
     private int xp;
     private int points;
+    private int currentHP;
+    private int currentStamina;
 
-    public Stats(int vitality, int strength, int agility, int focus, int stamina, int mastery, int level){
+    public Stats(int vitality, int strength, int agility, int focus, int stamina, int mastery,  int level){
         this.vitality = vitality;
         this.strength = strength;
         this.agility = agility;
         this.focus = focus;
         this.stamina = stamina;
         this.mastery = mastery;
+        this.basePower = 0;
+        this.momentum = 0;
         this.level = level;
         this.xp = 0;
         this.points = 0;
+        this.currentHP = 0;
+        this.currentStamina = 0;
     }
 
     public int getMaxHP(){
         return (this.vitality*10) + (getLevel()*5);
+    }
+    public int getMaxStamina(){
+        return (this.stamina*3)+(getLevel()*2);
     }
     public int getPhysicalDamage(){
         return (this.strength*2)+Math.toIntExact(Math.round(0.6*(this.agility)));
@@ -35,16 +46,19 @@ public class Stats {
     public int getElementalDamage(){
         return (this.focus*3)+Math.toIntExact(Math.round(0.3*(this.agility)));
     }
-    public int getMaxStamina(){
-        return (this.stamina*3)+(getLevel()*2);
-    }
     public int getCritChance(){
         return this.agility+15;
     }
-    public int damageResistance(){
+    public int getDefence(){
         return this.vitality+10;
     }
 
+    public int getCurrentHP() {
+        return currentHP;
+    }
+    public int getCurrentStamina() {
+        return currentStamina;
+    }
     public int getVitality(){
         return this.vitality;
     }
@@ -62,6 +76,12 @@ public class Stats {
     }
     public int getMastery(){
         return this.mastery;
+    }
+    public int getMomentum(){
+        return this.momentum;
+    }
+    public int getBasePower(){
+        return this.basePower;
     }
     public int getLevel(){
         return this.level;
@@ -91,14 +111,32 @@ public class Stats {
     public void increaseMastery(int amount){
         this.mastery+=amount;
     }
+
     public void increaseLevel(int amount){
         this.level+=amount;
     }
     public void increaseXp(int amount){
         this.xp+=amount;
     }
-    public void increasepoints(){
-        this.points+=points;
+    public void increasePoints(int amount){
+        this.points+=amount;
+    }
+
+    public void changeCurrentHP(int amount){
+        this.currentHP += amount;
+    }
+    public void changeBasePower(int amount){
+        this.basePower+=amount;
+    }
+    public void changeMomentum(int amount){
+        this.momentum+=amount;
+    }
+
+    public void recoverHP(){
+        this.currentHP = getMaxHP();
+    }
+    public void recoverStamina(){
+        this.currentStamina = getStamina();
     }
 
 }

@@ -9,10 +9,11 @@ public class Player {
     private world.Room currentRoom;
     private Stats playerStats;
     Inventory inventory = new Inventory();
+    private int currentHP;
 
     public Player(String name, Room startingRoom){
-        this.name=name;
-        this.currentRoom=startingRoom;
+        this.name = name;
+        this.currentRoom = startingRoom;
         this.playerStats = new Stats(10,10,10,10,10,10,1);
     }
     public world.Room getCurrentRoom(){
@@ -28,7 +29,8 @@ public class Player {
         return this.name;
     }
     public void levelUp(){
-         this.playerStats.increasepoints();
+        this.playerStats.increaseLevel(1);
+        this.playerStats.increasePoints(5);
     }
 
 }
