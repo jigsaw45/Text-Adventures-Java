@@ -9,8 +9,9 @@ public class Stats {
     private int mastery;
     private int level;
     private int xp;
+    private int points;
 
-    public Stats(int vitality, int strength, int agility, int focus, int stamina, int mastery, int level, int xp){
+    public Stats(int vitality, int strength, int agility, int focus, int stamina, int mastery, int level){
         this.vitality = vitality;
         this.strength = strength;
         this.agility = agility;
@@ -18,20 +19,21 @@ public class Stats {
         this.stamina = stamina;
         this.mastery = mastery;
         this.level = level;
-        this.xp = xp;
+        this.xp = 0;
+        this.points = 0;
     }
 
     public int getMaxHP(){
         return (this.vitality*10) + (getLevel()*5);
     }
     public int getPhysicalDamage(){
-        return (this.strength*2)+(getLevel());
+        return (this.strength*2)+Math.toIntExact(Math.round(0.6*(this.agility)));
     }
     public int getDodgeChance(){
         return Math.toIntExact((Math.round(this.agility * 1.5) + getLevel()));
     }
     public int getElementalDamage(){
-        return (this.focus*2)+(getLevel());
+        return (this.focus*3)+Math.toIntExact(Math.round(0.3*(this.agility)));
     }
     public int getMaxStamina(){
         return (this.stamina*3)+(getLevel()*2);
@@ -67,30 +69,36 @@ public class Stats {
     public int getXp(){
         return this.xp;
     }
+    public int getPoints(){
+        return this.points;
+    }
 
-    public void setVitality(int amount){
-        this.vitality=amount;
+    public void increaseVitality(int amount){
+        this.vitality+=amount;
     }
-    public void setStrength(int amount){
-        this.strength=amount;
+    public void increaseStrength(int amount){
+        this.strength+=amount;
     }
-    public void setAgility(int amount){
-        this.agility=amount;
+    public void increaseAgility(int amount){
+        this.agility+=amount;
     }
-    public void setFocus(int amount){
-        this.focus=amount;
+    public void increaseFocus(int amount){
+        this.focus+=amount;
     }
-    public void setStamina(int amount){
-        this.stamina=amount;
+    public void increaseStamina(int amount){
+        this.stamina+=amount;
     }
-    public void setMastery(int amount){
-        this.mastery=amount;
+    public void increaseMastery(int amount){
+        this.mastery+=amount;
     }
-    public void setLevel(int amount){
-        this.level=amount;
+    public void increaseLevel(int amount){
+        this.level+=amount;
     }
-    public void setXp(int amount){
-        this.xp=amount;
+    public void increaseXp(int amount){
+        this.xp+=amount;
+    }
+    public void increasepoints(){
+        this.points+=points;
     }
 
 }

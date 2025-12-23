@@ -1,7 +1,10 @@
 package game;
 
+import combat.Stats;
+import enemy.Enemy;
 import io.Command;
 import io.CommandParser;
+import io.TextOutput;
 import player.Player;
 import world.Room;
 
@@ -9,18 +12,23 @@ import java.util.Scanner;
 
 public class Game {
     private Player player;
+    private Enemy enemy1;
     private boolean running = true;
     private Scanner scanner = new Scanner(System.in);
+    private TextOutput printer;
 
     public Game(){
         setupworld();
     }
 
     private void setupworld(){
+        printer = new TextOutput();
         world.Room r1 = new Room("room 1", "this is room 1");
         world.Room r2 = new Room("room 2", "this is room 2");
         world.Room r3 = new Room("room 3", "this is room 3");
         player = new Player("player", r1);
+        //enemy1 is Gorlock
+        enemy1 = new Enemy("Gorlock");
     }
 
     public void start() {
@@ -30,9 +38,12 @@ public class Game {
             System.out.println("(1) Start game");
             System.out.println("(2) Options");
             System.out.println(">:");
+            printer.displayPlayerStats(player);
+            player.levelUp();
             String input = scanner.nextLine();
             Command cmd = CommandParser.parse(input);
             handleCommand(cmd);
+
         }
     }
     public void handleCommand(Command cmd){

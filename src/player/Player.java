@@ -1,17 +1,19 @@
 package player;
 
+import combat.Stats;
 import game.Game;
 import world.Room;
 
 public class Player {
     private String name;
     private world.Room currentRoom;
-    private int health;
+    private Stats playerStats;
     Inventory inventory = new Inventory();
 
     public Player(String name, Room startingRoom){
         this.name=name;
         this.currentRoom=startingRoom;
+        this.playerStats = new Stats(10,10,10,10,10,10,1);
     }
     public world.Room getCurrentRoom(){
         return currentRoom;
@@ -19,4 +21,14 @@ public class Player {
     public void setCurrentRoom(world.Room room){
         this.currentRoom = room;
     }
+    public Stats getStats(){
+        return this.playerStats;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public void levelUp(){
+         this.playerStats.increasepoints();
+    }
+
 }
