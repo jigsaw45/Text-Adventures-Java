@@ -24,13 +24,16 @@ public class TextUI {
     public void encounterText(Enemy enemy){
         System.out.println("You Have encountered " + enemy.getName());
     }
-    public void hpAmount(Player player){
-        System.out.println("you have " + player.getStats().getCurrentHP() + "/" + player.getStats().getMaxHP());
+    public void hpAmountText(Player player){
+        System.out.println("you have " + player.getStats().getCurrentHP() + "/" + player.getStats().getMaxHP()+ "HP");
     }
-    public void fightOptions(){
-        System.out.println("Fight Options-\n(1)Fight\n(2)Run");
-    }
-    public void stanceOptions(){
+    public void stanceOptionText(){
         System.out.println("Select your stance for this turn-\n(1)Aggressive\n(2)Balanced\n(3)Defensive\n(4)Focused");
+    }
+    public void skillOptionText(){
+        System.out.println("Select your skill for this turn-\n(1)Light Punch\n(2)Heavy Punch\n(3)light Kick\n(4)Heavy Kick");
+    }
+    public void fightEnd(Enemy enemy){
+        System.out.println("You have defeated "+enemy.getName()+"!!!");
     }
 }

@@ -14,7 +14,7 @@ public class Player {
     public Player(String name, Room startingRoom){
         this.name = name;
         this.currentRoom = startingRoom;
-        this.playerStats = new Stats(10,10,10,10,10,10,1);
+        this.playerStats = new Stats(10,10,10,10,100,10,1);
     }
     public world.Room getCurrentRoom(){
         return currentRoom;
