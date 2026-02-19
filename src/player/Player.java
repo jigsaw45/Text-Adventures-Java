@@ -16,6 +16,7 @@ public class Player {
         this.currentRoom = startingRoom;
         this.playerStats = new Stats(10,10,10,10,100,10,1);
     }
+    
     public world.Room getCurrentRoom(){
         return currentRoom;
     }

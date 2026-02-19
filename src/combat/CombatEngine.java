@@ -3,7 +3,6 @@ package combat;
 import skills.Skill;
 
 public class CombatEngine {
-    private int damage;
     public CombatEngine(){
     }
 

@@ -152,7 +152,7 @@ public class Stats {
         return currentStamina;
     }
     public void recoverStamina(){
-        this.currentStamina = getStamina();
+        this.currentStamina = getMaxStamina();
     }
     public void spendStamina(int cost){
         if(this.canAffordStamina(cost)) {

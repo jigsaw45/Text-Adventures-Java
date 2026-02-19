@@ -8,6 +8,8 @@ import io.CommandParser;
 import io.TextUI;
 import player.Player;
 import skills.Skill;
+import skills.SkillBox;
+import skills.SkillLoadout;
 import world.Room;
 import java.util.Scanner;
 
@@ -22,6 +24,8 @@ public class Game {
     private Scanner scanner = new Scanner(System.in);
     private CombatEngine combatEngine;
     private TextUI textUI;
+    private SkillBox skillBox;
+    private SkillLoadout playerSkillLoadout;
 
     public Game(){
         setupworld();
@@ -39,11 +43,13 @@ public class Game {
         player = new Player("player", r1);
         //enemy
         enemy1 = new Enemy("Gorlock",10,10,10,10,10,10,10);
-        //skills
-        lightPunch = new Skill("Light Punch", 10,10);
-        heavyPunch = new Skill("Heavy Punch", 20,30);
-        lightKick = new Skill("Light Kick", 15, 20);
-        heavyKick = new Skill("Heavy Kick", 30, 40);
+        //Skills
+        skillBox = new SkillBox();
+        playerSkillLoadout = new SkillLoadout(
+                skillBox.getOwnedSkills()[0],
+                skillBox.getOwnedSkills()[1],
+                skillBox.getOwnedSkills()[2],
+                skillBox.getOwnedSkills()[3]);
     }
 
     public void start() {
@@ -60,7 +66,7 @@ public class Game {
                 textUI.commandLook(player);
                 break;
             case "go":
-                combatTurn(player.getStats(),enemy1.getStats());
+                combatTurn(player.getStats(), enemy1.getStats());
                 break;
             case "move":
                 if(cmd.hasNoun()){
@@ -83,63 +89,75 @@ public class Game {
                 textUI.displayPlayerStats(player);
                 break;
             default:
-                System.out.println("invalid command!");
+                textUI.invalidCmd();
         }
     }
 
     //Combat Methods
-    public Skill skillChoice(Player player){
+    public Skill playerSkillChoice(SkillLoadout playerSkillLoadout){
         while(true) {
-            textUI.skillOptionText();
+            textUI.playerSkillOptionText();
             String input = scanner.nextLine();
             switch (input) {
                 case "1":
-                    return lightPunch;
+                    return playerSkillLoadout.getEquipped()[0];
                 case "2":
-                    return heavyPunch;
+                    return playerSkillLoadout.getEquipped()[1];
                 case "3":
-                    return lightKick;
+                    return playerSkillLoadout.getEquipped()[2];
                 case "4":
-                    return heavyKick;
+                    return playerSkillLoadout.getEquipped()[3];
                 default:
-                    System.out.println("invalid command!");
+                    textUI.invalidCmd();
                     break;
             }
         }
     }
-    public void combatTurn(Stats playerStats, Stats enemyStats){
-        while(true){
-            Skill skill = skillChoice(player);
-            if(playerStats.canAffordStamina(skill.getStaminaCost())) {
-                int damage = combatEngine.calculateDamage(playerStats, skill, enemyStats);
-                combatEngine.applyDamage(enemyStats, damage);
-                playerStats.spendStamina(skill.getStaminaCost());
-                playerStats.changeMomentum(5);
-                enemyStats.changeMomentum(-10);
-                System.out.println("you did "+damage+" damage\nEnemy has "+enemyStats.getCurrentHP()+"/"+enemyStats.getMaxHP()+ " HP\nStamina: "+playerStats.getCurrentStamina()+"\nMomentum: "+playerStats.getMomentum());
-
-                if(combatEngine.isDead(enemyStats)){System.out.print("they have died");}
-            }
-            else{
-                System.out.println("cannot afford this skill") ;
-            }
+    public void playerCombatTurn(Stats attackerStats, Stats defenderStats){
+        Skill skill = playerSkillChoice(playerSkillLoadout);
+        if(attackerStats.canAffordStamina(skill.getStaminaCost())) {
+            int damage = combatEngine.calculateDamage(attackerStats, skill, defenderStats);
+            combatEngine.applyDamage(defenderStats, damage);
+            attackerStats.spendStamina(skill.getStaminaCost());
+            attackerStats.changeMomentum(5);
+            defenderStats.changeMomentum(-10);
+            textUI.playerDamageDealt(attackerStats, defenderStats, damage);
+        }
+        else{
+            System.out.println("cannot afford this skill") ;
         }
     }
-    public void combatTurnAI(Stats playerStats, Stats enemyStats){
-        while(true){
-            Skill skill = skillChoice(player);
-            if(playerStats.canAffordStamina(skill.getStaminaCost())) {
-                int damage = combatEngine.calculateDamage(playerStats, skill, enemyStats);
-                combatEngine.applyDamage(enemyStats, damage);
-                playerStats.spendStamina(skill.getStaminaCost());
-                playerStats.changeMomentum(5);
-                enemyStats.changeMomentum(-10);
+    public void botCombatTurn(Stats player, Stats enemy){
+        Skill skill = botSkillChoice();
+        //botSkillChoice non-existent right now
+        int damage = combatEngine.calculateDamage(enemy, skill, player);
+        combatEngine.applyDamage(player, damage);
+        player.changeMomentum(5);
+        enemy.changeMomentum(-10);
+    }
 
-                if(combatEngine.isDead(enemyStats)){System.out.print("they have died");}
-            }
-            else{
-                System.out.println("cannot afford this skill") ;
+    public void combatTurn(Stats player, Stats enemy){
+        if(player.getAgility()>enemy.getAgility()){
+            while(!(combatEngine.isDead(player) || combatEngine.isDead(enemy))){
+                playerCombatTurn(player, enemy);
+                if(combatEngine.isDead(enemy)){
+                    break;
+                }
+                botCombatTurn(player, enemy);
             }
         }
+        else{
+            while(!(combatEngine.isDead(player) || combatEngine.isDead(enemy))){
+                botCombatTurn(player, enemy);
+                if(combatEngine.isDead(player)){
+                    break;
+                }
+                playerCombatTurn(player, enemy);
+            }
+        }
+
+
+
+
     }
 }
