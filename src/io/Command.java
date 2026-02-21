@@ -18,4 +18,4 @@ public class Command {
     public boolean hasNoun() {
         return noun !=null && !noun.isEmpty();
     }
-}
+} 

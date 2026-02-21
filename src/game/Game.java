@@ -3,6 +3,7 @@ package game;
 import combat.CombatEngine;
 import combat.Stats;
 import enemy.Enemy;
+import enemy.EnemyAI;
 import io.Command;
 import io.CommandParser;
 import io.TextUI;
@@ -11,6 +12,8 @@ import skills.Skill;
 import skills.SkillBox;
 import skills.SkillLoadout;
 import world.Room;
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Game {
@@ -26,11 +29,14 @@ public class Game {
     private TextUI textUI;
     private SkillBox skillBox;
     private SkillLoadout playerSkillLoadout;
+    private SkillLoadout gorlockSkillLoadout;
+    private EnemyAI enemyAI;
 
     public Game(){
         setupworld();
     }
 
+    //Setup and creation
     private void setupworld(){
         //misc setups
         textUI = new TextUI();
@@ -39,17 +45,24 @@ public class Game {
         world.Room r1 = new Room("room 1", "this is room 1");
         world.Room r2 = new Room("room 2", "this is room 2");
         world.Room r3 = new Room("room 3", "this is room 3");
+        //skill loadouts
+        skillBox = new SkillBox();
+        playerSkillLoadout = new SkillLoadout(
+                skillBox.getSkillIndex()[0],
+                skillBox.getSkillIndex()[1],
+                skillBox.getSkillIndex()[2],
+                skillBox.getSkillIndex()[3]);
+        gorlockSkillLoadout = new SkillLoadout(
+                skillBox.getSkillIndex()[4],
+                skillBox.getSkillIndex()[5],
+                skillBox.getSkillIndex()[6],
+                skillBox.getSkillIndex()[7]);
         //player
         player = new Player("player", r1);
         //enemy
-        enemy1 = new Enemy("Gorlock",10,10,10,10,10,10,10);
-        //Skills
-        skillBox = new SkillBox();
-        playerSkillLoadout = new SkillLoadout(
-                skillBox.getOwnedSkills()[0],
-                skillBox.getOwnedSkills()[1],
-                skillBox.getOwnedSkills()[2],
-                skillBox.getOwnedSkills()[3]);
+        enemyAI = new EnemyAI();
+        enemy1 = new Enemy("Gorlock",10,10,10,10,10,10,10, gorlockSkillLoadout);
+
     }
 
     public void start() {
@@ -66,7 +79,7 @@ public class Game {
                 textUI.commandLook(player);
                 break;
             case "go":
-                combatTurn(player.getStats(), enemy1.getStats());
+                combatTurn(player, enemy1);
                 break;
             case "move":
                 if(cmd.hasNoun()){
@@ -93,7 +106,17 @@ public class Game {
         }
     }
 
+    //Misc methods
+    public void sleep(double seconds){
+        try{
+            Thread.sleep((long) (seconds*1000));
+        }catch(InterruptedException ex){
+            Thread.currentThread().interrupt();
+        }
+    }
     //Combat Methods
+
+    //menu for players skill selection
     public Skill playerSkillChoice(SkillLoadout playerSkillLoadout){
         while(true) {
             textUI.playerSkillOptionText();
@@ -113,46 +136,67 @@ public class Game {
             }
         }
     }
-    public void playerCombatTurn(Stats attackerStats, Stats defenderStats){
+
+    //player half of turn
+    public void playerCombatTurn(Player player, Enemy enemy){
         Skill skill = playerSkillChoice(playerSkillLoadout);
-        if(attackerStats.canAffordStamina(skill.getStaminaCost())) {
-            int damage = combatEngine.calculateDamage(attackerStats, skill, defenderStats);
-            combatEngine.applyDamage(defenderStats, damage);
-            attackerStats.spendStamina(skill.getStaminaCost());
-            attackerStats.changeMomentum(5);
-            defenderStats.changeMomentum(-10);
-            textUI.playerDamageDealt(attackerStats, defenderStats, damage);
+        if(player.getStats().canAffordStamina(skill.getStaminaCost())) {
+            int damage = combatEngine.calculateDamage(player.getStats(), skill, enemy.getStats());
+            combatEngine.applyDamage(enemy.getStats(), damage);
+            player.getStats().spendStamina(skill.getStaminaCost());
+            player.getStats().changeMomentum(5);
+            enemy.getStats().changeMomentum(-10);
+            textUI.playerDamageDealt(player, enemy, damage);
         }
         else{
             System.out.println("cannot afford this skill") ;
         }
     }
-    public void botCombatTurn(Stats player, Stats enemy){
-        Skill skill = botSkillChoice();
-        //botSkillChoice non-existent right now
-        int damage = combatEngine.calculateDamage(enemy, skill, player);
-        combatEngine.applyDamage(player, damage);
-        player.changeMomentum(5);
-        enemy.changeMomentum(-10);
+
+    //bot half of turn
+    public void botCombatTurn(Player player, Enemy enemy){
+        Skill skill = enemyAI.botSkillChoice(enemy);
+        int damage = combatEngine.calculateDamage(enemy.getStats(), skill, player.getStats());
+        combatEngine.applyDamage(player.getStats(), damage);
+        enemy.getStats().changeMomentum(5);
+        player.getStats().changeMomentum(-10);
+        textUI.enemyDamageDealt(player, enemy, damage);
     }
 
-    public void combatTurn(Stats player, Stats enemy){
-        if(player.getAgility()>enemy.getAgility()){
-            while(!(combatEngine.isDead(player) || combatEngine.isDead(enemy))){
+    //full turn
+    public void combatTurn(Player player, Enemy enemy){
+        if(player.getStats().getAgility()>enemy.getStats().getAgility()){
+            while(!(combatEngine.isDead(player.getStats()) || combatEngine.isDead(enemy.getStats()))){
                 playerCombatTurn(player, enemy);
-                if(combatEngine.isDead(enemy)){
+                if(combatEngine.isDead(enemy.getStats())){
+                    textUI.fightEnd(enemy);
                     break;
                 }
+
+                //wait 3 seconds
+                sleep(1);
+
                 botCombatTurn(player, enemy);
+
+                //wait 3 seconds
+                sleep(1);
             }
         }
         else{
-            while(!(combatEngine.isDead(player) || combatEngine.isDead(enemy))){
+            while(!(combatEngine.isDead(player.getStats()) || combatEngine.isDead(enemy.getStats()))){
                 botCombatTurn(player, enemy);
-                if(combatEngine.isDead(player)){
+                if(combatEngine.isDead(player.getStats())){
+                    textUI.playerDeath();
                     break;
                 }
+
+                //wait 3 seconds
+                sleep(1);
+
                 playerCombatTurn(player, enemy);
+
+                //wait 3 seconds
+                sleep(1);
             }
         }
 

@@ -11,6 +11,8 @@ public class CombatEngine {
     }
     public void applyDamage(Stats defender, int damage){
         defender.changeCurrentHP(-damage);
+        if(defender.getCurrentHP()<0){defender.setCurrentHP(0);
+        }
     }
     public boolean isDead(Stats target){
         return target.getCurrentHP() <= 0;

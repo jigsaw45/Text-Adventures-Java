@@ -126,6 +126,9 @@ public class Stats {
     public int getMomentum(){
         return this.momentum;
     }
+    public void setMomentum(int amount){
+        this.momentum = amount;
+    }
     public void changeMomentum(int amount){
         this.momentum+=amount;
         if(this.momentum<0){
@@ -140,6 +143,7 @@ public class Stats {
     public int getCurrentHP() {
         return currentHP;
     }
+    public void setCurrentHP(int amount){this.currentHP = amount;}
     public void recoverHP(){
             this.currentHP = getMaxHP();
     }
@@ -151,6 +155,7 @@ public class Stats {
     public int getCurrentStamina() {
         return currentStamina;
     }
+    public void setCurrentStamina(int amount){this.currentStamina = amount;}
     public void recoverStamina(){
         this.currentStamina = getMaxStamina();
     }

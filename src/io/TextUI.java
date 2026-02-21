@@ -23,22 +23,38 @@ public class TextUI {
         System.out.println(player.getCurrentRoom());
     }
     public void encounterText(Enemy enemy){
-        System.out.println("You Have encountered " + enemy.getName());
+        System.out.println("\nYou Have encountered " + enemy.getName());
     }
     public void playerHpAmountText(Player player){
-        System.out.println("you have " + player.getStats().getCurrentHP() + "/" + player.getStats().getMaxHP()+ "HP");
+        System.out.println("\nyou have " + player.getStats().getCurrentHP() + "/" + player.getStats().getMaxHP()+ "HP");
     }
     public void playerStanceOptionText(){
-        System.out.println("Select your stance for this turn-\n(1)Aggressive\n(2)Balanced\n(3)Defensive\n(4)Focused");
+        System.out.println("\nSelect your stance for this turn-\n(1)Aggressive\n(2)Balanced\n(3)Defensive\n(4)Focused");
     }
     public void playerSkillOptionText(){
-        System.out.println("Select your skill for this turn-\n(1)Light Punch\n(2)Heavy Punch\n(3)light Kick\n(4)Heavy Kick");
+        System.out.println("\nSelect your skill for this turn-\n(1)Light Punch\n(2)Heavy Punch\n(3)light Kick\n(4)Heavy Kick");
     }
     public void fightEnd(Enemy enemy){
-        System.out.println("You have defeated "+enemy.getName()+"!!!");
+        System.out.println("\nYou have defeated "+enemy.getName()+"!!!");
+    }
+    public void playerDeath(){
+        System.out.println("\nYou have died!");
     }
     public void invalidCmd(){
-        System.out.println("invalid command!);");
+        System.out.println("\ninvalid command!);");
     }
-    public void playerDamageDealt(Stats playerStats, Stats enemyStats, int damage){System.out.println("you did "+damage+" damage\nEnemy has "+enemyStats.getCurrentHP()+"/"+enemyStats.getMaxHP()+ " HP\nStamina: "+playerStats.getCurrentStamina()+"\nMomentum: "+playerStats.getMomentum());}
+    public void playerDamageDealt(Player player, Enemy enemy, int damage){System.out.println(
+            "\nyou did "+damage+" damage to " + enemy.getName() +
+            "\n"+enemy.getName() + "'s HP: " + enemy.getStats().getCurrentHP() + "/" +enemy.getStats().getMaxHP() +
+            "\nStamina: "+player.getStats().getCurrentStamina()+
+            "\nMomentum: "+player.getStats().getMomentum());
+    }
+    public void enemyDamageDealt(Player player, Enemy enemy, int damage) {
+        System.out.println(
+                "\n" + enemy.getName() + " did " + damage + " damage" +
+                        "\nYou have " + player.getStats().getCurrentHP() + "/" + player.getStats().getMaxHP() + " HP\n" +
+                        enemy.getName() + "'s momentum: " + enemy.getStats().getMomentum());
+    }
+
 }
+

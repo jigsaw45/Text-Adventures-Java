@@ -5,21 +5,21 @@ import java.util.List;
 
 public class SkillBox {
 
-    private Skill[] ownedSkills = new Skill[4];
+    private static final Skill[] SKILLINDEX = new Skill[8];
 
 
     public SkillBox(){
-        ownedSkills[0] = new Skill("Light Punch", 10,10);
-        ownedSkills[1] = new Skill("Heavy Punch", 20,30);
-        ownedSkills[2] = new Skill("Light Kick", 15, 20);
-        ownedSkills[3] = new Skill("Heavy Kick", 30, 40);
+        SKILLINDEX[0] = new Skill("Light Punch", 10,10);
+        SKILLINDEX[1] = new Skill("Heavy Punch", 20,30);
+        SKILLINDEX[2] = new Skill("Light Kick", 15, 20);
+        SKILLINDEX[3] = new Skill("Heavy Kick", 30, 40);
+        SKILLINDEX[4] = new Skill("attackOne", 10,10);
+        SKILLINDEX[5] = new Skill("attackTwo", 20,30);
+        SKILLINDEX[6] = new Skill("attackThree", 15, 20);
+        SKILLINDEX[7] = new Skill("attackFour", 30, 40);
     }
 
-    public Skill[] getOwnedSkills() {
-        return ownedSkills;
-    }
-
-    public void setOwnedSkills(Skill[] ownedSkills) {
-        this.ownedSkills = ownedSkills;
+    public Skill[] getSkillIndex() {
+        return SKILLINDEX;
     }
 }
