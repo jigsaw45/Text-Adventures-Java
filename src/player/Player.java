@@ -9,7 +9,7 @@ public class Player {
     private String name;
     private world.Room currentRoom;
     private Stats playerStats;
-    Inventory inventory = new Inventory();
+    private Inventory inventory
     private int currentHP;
     private SkillLoadout skillLoadout;
 
@@ -18,6 +18,7 @@ public class Player {
         this.currentRoom = startingRoom;
         this.playerStats = new Stats(10,10,10,10,100,10,1);
         this.skillLoadout = new SkillLoadout();
+        this.inventory = new Inventory();
     }
     
     public world.Room getCurrentRoom(){

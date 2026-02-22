@@ -8,16 +8,29 @@ public class TextUI {
     public TextUI(){
     }
     public void displayPlayerStats(Player player){
-        System.out.println("Name: " + player.getName() + "\n" +
-                           "Level: " + player.getStats().getLevel() + "\n" +
-                           "MaxHP: " + player.getStats().getMaxHP() + "\n" +
-                           "Vitality: "+ player.getStats().getVitality() + "\n" +
-                           "MaxStamina: "+ player.getStats().getMaxStamina() + "\n" +
-                           "Stamina: "+ player.getStats().getStamina() + "\n" +
-                           "Strength: " + player.getStats().getStrength() + "\n" +
-                           "Focus: "+ player.getStats().getFocus() + "\n" +
-                           "Agility: " + player.getStats().getAgility() + "\n" +
-                           "Mastery: "+ player.getStats().getMastery() + "\n");
+        System.out.println("Name: " + player.getName() +
+                           "\nMaxHP: " + player.getStats().getMaxHP() +
+                           "\nMaxStamina: "+ player.getStats().getMaxStamina() +
+                           "\nLevel: " + player.getStats().getLevel() +
+                           "\nAvailable points: " + player.getStats().getPoints() +
+                           "\n(1) Vitality: "+ player.getStats().getVitality() +
+                           "\n(2) Stamina: "+ player.getStats().getStamina() +
+                           "\n(3) Strength: " + player.getStats().getStrength() +
+                           "\n(4) Focus: "+ player.getStats().getFocus() +
+                           "\n(5) Agility: " + player.getStats().getAgility() +
+                           "\n(6) Mastery: "+ player.getStats().getMastery() +
+                           "\n(7) Exit");
+    }
+
+    public void pointAmount(int points){
+        System.out.println("You currently have " + points + " points+" +
+                           "\nHow many points do you want to distribute into "+stat+"? ");
+    }
+    public void pointInvested(String stat, int amount){
+        System.out.println("You have put "+amount+" points into " + stat);
+    }
+    public void pointAmountError(){
+        System.out.println("Error! You don't have that many points!");
     }
     public void commandLook(Player player){
         System.out.println(player.getCurrentRoom());

@@ -36,7 +36,7 @@ public class Game {
         setupworld();
     }
 
-    //Setup and creation
+    //Setup and creation -----------------------------------------------------------------------------------------------
     private void setupworld(){
         //misc setups
         textUI = new TextUI();
@@ -99,14 +99,14 @@ public class Game {
                 System.out.println("Goodbye.");
                 break;
             case "stats":
-                textUI.displayPlayerStats(player);
+
                 break;
             default:
                 textUI.invalidCmd();
         }
     }
 
-    //Misc methods
+    //Misc methods -----------------------------------------------------------------------------------------------------
     public void sleep(double seconds){
         try{
             Thread.sleep((long) (seconds*1000));
@@ -114,9 +114,89 @@ public class Game {
             Thread.currentThread().interrupt();
         }
     }
-    //Combat Methods
+    //Menu methods -----------------------------------------------------------------------------------------------------
 
-    //menu for players skill selection
+    //Stat investment Methods
+    public boolean investInStat(int statChoice){
+        int amount = Integer.MAX_VALUE;
+        int playerPoints = player.getStats().getPoints();
+        String stat = "";
+        scanner.nextLine();
+        textUI.pointAmount(playerPoints);
+        amount = scanner.nextInt();
+        scanner.nextLine();
+        if(amount<=playerPoints){
+            switch(statChoice){
+                case 1:
+                    stat="Vitality";
+                    player.getStats().increaseVitality(amount);
+                    break;
+                case 2:
+                    stat="Stamina";
+                    player.getStats().increaseStamina(amount);
+                    break;
+                case 3:
+                    stat="Strength";
+                    player.getStats().increaseStrength(amount);
+                    break;
+                case 4:
+                    stat="Focus";
+                    player.getStats().increaseFocus(amount);
+                    break;
+                case 5:
+                    stat="Agility";
+                    player.getStats().increaseAgility(amount);
+                    break;
+                case 6:
+                    stat = "Mastery";
+                    player.getStats().increaseMastery(amount);
+                    break;
+            }
+            textUI.pointInvested(stat, amount);
+            player.getStats().increasePoints(-amount);
+            return false;
+        }else{
+            textUI.pointAmountError();
+            return true;
+        }
+    }
+
+    public void statMenu() {
+        boolean menuRun = true;
+        while(menuRun) {
+            textUI.displayPlayerStats(player);
+
+            switch (scanner.nextInt()) {
+                case 1:
+                    menuRun = investInStat(1);
+                    break;
+                case 2:
+                    menuRun = investInStat(2);
+                    break;
+                case 3:
+                    menuRun = investInStat(3);
+                    break;
+                case 4:
+                    menuRun = investInStat(4);
+                    break;
+                case 5:
+                    menuRun = investInStat(5);
+                    break;
+                case 6:
+                    menuRun = investInStat(6);
+                    break;
+                case 7:
+                    menuRun = false;
+                    break;
+                default:
+                    textUI.invalidCmd();
+                    break;
+
+            }
+        }
+    }
+
+
     public Skill playerSkillChoice(SkillLoadout playerSkillLoadout){
         while(true) {
             textUI.playerSkillOptionText();
@@ -136,6 +216,7 @@ public class Game {
             }
         }
     }
+    //Combat Methods ---------------------------------------------------------------------------------------------------
 
     //player half of turn
     public void playerCombatTurn(Player player, Enemy enemy){
