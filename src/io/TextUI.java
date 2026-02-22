@@ -9,9 +9,9 @@ public class TextUI {
     }
     public void displayPlayerStats(Player player){
         System.out.println("Name: " + player.getName() +
+                           "\nLevel: " + player.getStats().getLevel() +
                            "\nMaxHP: " + player.getStats().getMaxHP() +
                            "\nMaxStamina: "+ player.getStats().getMaxStamina() +
-                           "\nLevel: " + player.getStats().getLevel() +
                            "\nAvailable points: " + player.getStats().getPoints() +
                            "\n(1) Vitality: "+ player.getStats().getVitality() +
                            "\n(2) Stamina: "+ player.getStats().getStamina() +
@@ -24,7 +24,7 @@ public class TextUI {
 
     public void pointAmount(int points){
         System.out.println("You currently have " + points + " points+" +
-                           "\nHow many points do you want to distribute into "+stat+"? ");
+                           "\nHow many points do you want to distribute into the stat?");
     }
     public void pointInvested(String stat, int amount){
         System.out.println("You have put "+amount+" points into " + stat);
@@ -48,7 +48,7 @@ public class TextUI {
         System.out.println("\nSelect your skill for this turn-\n(1)Light Punch\n(2)Heavy Punch\n(3)light Kick\n(4)Heavy Kick");
     }
     public void fightEnd(Enemy enemy){
-        System.out.println("\nYou have defeated "+enemy.getName()+"!!!");
+        System.out.println("\nYou have defeated " + enemy.getName() + "!!!");
     }
     public void playerDeath(){
         System.out.println("\nYou have died!");
@@ -59,8 +59,8 @@ public class TextUI {
     public void playerDamageDealt(Player player, Enemy enemy, int damage){System.out.println(
             "\nyou did "+damage+" damage to " + enemy.getName() +
             "\n"+enemy.getName() + "'s HP: " + enemy.getStats().getCurrentHP() + "/" +enemy.getStats().getMaxHP() +
-            "\nStamina: "+player.getStats().getCurrentStamina()+
-            "\nMomentum: "+player.getStats().getMomentum());
+            "\nStamina: " + player.getStats().getCurrentStamina() + "/"+player.getStats().getMaxStamina() +
+            "\nMomentum: " + player.getStats().getMomentum());
     }
     public void enemyDamageDealt(Player player, Enemy enemy, int damage) {
         System.out.println(

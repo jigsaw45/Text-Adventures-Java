@@ -9,7 +9,7 @@ public class Player {
     private String name;
     private world.Room currentRoom;
     private Stats playerStats;
-    private Inventory inventory
+    private Inventory inventory;
     private int currentHP;
     private SkillLoadout skillLoadout;
 

@@ -94,12 +94,14 @@ public class Game {
                     System.out.println("Go where?");
                 }
                 break;
+            case "stats":
+                statMenu();
+                break;
+            case "help":
+                System.out.println("Look, go, move, stats, help, quit");
             case "quit":
                 running = false;
                 System.out.println("Goodbye.");
-                break;
-            case "stats":
-
                 break;
             default:
                 textUI.invalidCmd();
