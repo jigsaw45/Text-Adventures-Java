@@ -9,7 +9,6 @@ import java.util.List;
 public class EnemyAI {
     public Skill botSkillChoice(Enemy enemy) {
         Skill highestDamage = new Skill();
-        Skill lowestStaminaCost = new Skill("high stamina", 0, 9999);
         List<Skill> affordableSkills = new ArrayList<>();
 
         //puts all skill enemy can afford into an arrayList
