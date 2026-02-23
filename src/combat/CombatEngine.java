@@ -7,7 +7,12 @@ public class CombatEngine {
     }
 
     public int calculateDamage(Stats attacker, Skill attackerSkill, Stats defender){
-        return ((int) ((attackerSkill.getBasePower()+ (double) attacker.getMomentum() /10) * ((double) attacker.getStrength() / (attacker.getStrength() + defender.getDefence()))));
+        if(attackerSkill.getSkillType() == 1){
+            return ((int) ((attackerSkill.getBasePower()+ (double) attacker.getMomentum() /10) * ((double) attacker.getStrength() / (attacker.getStrength() + defender.getDefence()))));
+        }else{
+            return ((int) ((attackerSkill.getBasePower()+ (double) attacker.getMomentum() /10) * ((double) attacker.getFocus() / (attacker.getFocus() + defender.getDefence()))));
+        }
+
     }
     public void applyDamage(Stats defender, int damage){
         defender.changeCurrentHP(-damage);

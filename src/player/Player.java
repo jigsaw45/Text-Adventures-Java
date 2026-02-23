@@ -13,11 +13,11 @@ public class Player {
     private int currentHP;
     private SkillLoadout skillLoadout;
 
-    public Player(String name, Room startingRoom){
+    public Player(String name, Room startingRoom, SkillLoadout skillLoadout){
         this.name = name;
         this.currentRoom = startingRoom;
         this.playerStats = new Stats(10,10,10,10,100,10,1);
-        this.skillLoadout = new SkillLoadout();
+        this.skillLoadout = skillLoadout;
         this.inventory = new Inventory();
     }
     

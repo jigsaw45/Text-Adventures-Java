@@ -20,12 +20,12 @@ public class Inventory {
         //adds item to arrayList
     }
 
-    public void addItem(String name, int quantity, String type) {
-        items.add(new Fruit(name, quantity, type));
+    public void addItem(String name, int quantity, String type, String description) {
+        items.add(new Fruit(name, quantity, type, description));
     }
 
-    public void addItem(String name, int quantity, int damage, String type) {
-        items.add(new Weapon(name, quantity, damage, type));
+    public void addItem(String name, int quantity, int damage, String type, String description) {
+        items.add(new Weapon(name, quantity, damage, type, description));
     }
 
     public void displayInventory() {

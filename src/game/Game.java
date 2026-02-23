@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 public class Game {
     private Player player;
-    private Enemy enemy1;
+    private Enemy enemyGorlock;
     private Skill lightPunch;
     private Skill heavyPunch;
     private Skill lightKick;
@@ -53,15 +53,15 @@ public class Game {
                 skillBox.getSkillIndex()[2],
                 skillBox.getSkillIndex()[3]);
         gorlockSkillLoadout = new SkillLoadout(
-                skillBox.getSkillIndex()[4],
-                skillBox.getSkillIndex()[5],
                 skillBox.getSkillIndex()[6],
-                skillBox.getSkillIndex()[7]);
+                skillBox.getSkillIndex()[7],
+                skillBox.getSkillIndex()[8],
+                skillBox.getSkillIndex()[9]);
         //player
-        player = new Player("player", r1);
+        player = new Player("player", r1, playerSkillLoadout);
         //enemy
         enemyAI = new EnemyAI();
-        enemy1 = new Enemy("Gorlock",10,10,10,10,10,10,10, gorlockSkillLoadout);
+        enemyGorlock = new Enemy("Gorlock",10,10,10,10,10,10,10, gorlockSkillLoadout);
 
     }
 
@@ -79,7 +79,7 @@ public class Game {
                 textUI.commandLook(player);
                 break;
             case "go":
-                combatTurn(player, enemy1);
+                combatTurn(player, enemyGorlock);
                 break;
             case "move":
                 if(cmd.hasNoun()){
@@ -201,7 +201,7 @@ public class Game {
 
     public Skill playerSkillChoice(SkillLoadout playerSkillLoadout){
         while(true) {
-            textUI.playerSkillOptionText();
+            textUI.playerSkillOptionText(player);
             String input = scanner.nextLine();
             switch (input) {
                 case "1":

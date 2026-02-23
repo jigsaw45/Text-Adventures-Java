@@ -31,4 +31,13 @@ public class Skill {
     public int getSkillType(){
         return skillType;
     }
+
+    public void setBasePower(int basePower) {
+        this.basePower = basePower;
+    }
+
+    @Override
+    public String toString(){
+        return this.name + " (" + this.basePower + " dmg, " + this.staminaCost + " stamina)";
+    }
 }

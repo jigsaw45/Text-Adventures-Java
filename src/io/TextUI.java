@@ -23,7 +23,7 @@ public class TextUI {
     }
 
     public void pointAmount(int points){
-        System.out.println("You currently have " + points + " points+" +
+        System.out.println("You currently have " + points + " points" +
                            "\nHow many points do you want to distribute into the stat?");
     }
     public void pointInvested(String stat, int amount){
@@ -44,8 +44,12 @@ public class TextUI {
     public void playerStanceOptionText(){
         System.out.println("\nSelect your stance for this turn-\n(1)Aggressive\n(2)Balanced\n(3)Defensive\n(4)Focused");
     }
-    public void playerSkillOptionText(){
-        System.out.println("\nSelect your skill for this turn-\n(1)Light Punch\n(2)Heavy Punch\n(3)light Kick\n(4)Heavy Kick");
+    public void playerSkillOptionText(Player player){
+        System.out.println("\nSelect your skill for this turn-" +
+                "\n(1)" + player.getSkillLoadout().getEquipped()[0].toString() +
+                "\n(2)" + player.getSkillLoadout().getEquipped()[1].toString() +
+                "\n(3)" + player.getSkillLoadout().getEquipped()[2].toString() +
+                "\n(4)" + player.getSkillLoadout().getEquipped()[3].toString());
     }
     public void fightEnd(Enemy enemy){
         System.out.println("\nYou have defeated " + enemy.getName() + "!!!");
@@ -54,7 +58,7 @@ public class TextUI {
         System.out.println("\nYou have died!");
     }
     public void invalidCmd(){
-        System.out.println("\ninvalid command!);");
+        System.out.println("\ninvalid command!");
     }
     public void playerDamageDealt(Player player, Enemy enemy, int damage){System.out.println(
             "\nyou did "+damage+" damage to " + enemy.getName() +
