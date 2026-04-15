@@ -21,8 +21,12 @@ public class SkillLoadout {
         return equipped;
     }
 
-    public void SetEquipped(Skill skill, int index){
-        this.equipped[index] = skill;
+    public void addSkill(Skill skill, int index){
+        if(skill.getOwned()){
+            this.equipped[index] = skill;
+        }else{
+            System.out.println("--You do not own "+skill.getName()+".--");
+        }
     }
 
 

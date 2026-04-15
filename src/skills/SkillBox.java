@@ -5,7 +5,7 @@ import java.util.List;
 
 public class SkillBox {
 
-    private static final Skill[] SKILLINDEX = new Skill[100];
+    private static final Skill[] SKILLINDEX = new Skill[14];
 
 
     public SkillBox(){
@@ -33,13 +33,30 @@ public class SkillBox {
         SKILLINDEX[11] = new Skill("Lightning Finger Jab",14,18,2);
         SKILLINDEX[12] = new Skill("Wind Cutting Blade",22,28,2);
         SKILLINDEX[13] = new Skill("Thunder Crack Strike",26,35,2);
-
-
-
-
     }
-
     public Skill[] getSkillIndex() {
         return SKILLINDEX;
+    }
+
+    public void searchByName(String name){
+
+    }
+    public int searchByDamage(int basePower) {
+        int low = 0;
+        int high = SKILLINDEX.length - 1;
+        while (low < high) {
+            int middle = (low + high) / 2;
+            if (SKILLINDEX[middle].getBasePower() == basePower)
+                return middle;
+            else if (SKILLINDEX[middle].getBasePower() > basePower)
+                high = middle - 1;
+            else {
+                low = middle + 1;
+            }
+        }
+        return -1;
+    }
+    public void searchByType(int type){
+
     }
 }

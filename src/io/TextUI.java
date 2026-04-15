@@ -3,6 +3,8 @@ package io;
 import combat.Stats;
 import enemy.Enemy;
 import player.Player;
+import skills.Skill;
+import skills.SkillBox;
 
 public class TextUI {
     public TextUI(){
@@ -72,6 +74,23 @@ public class TextUI {
                         "\nYou have " + player.getStats().getCurrentHP() + "/" + player.getStats().getMaxHP() + " HP\n" +
                         enemy.getName() + "'s momentum: " + enemy.getStats().getMomentum());
     }
+
+    public void skillBookUnlockMenu(SkillBox skillBox){
+        System.out.println("---Which skill do you want to unlock---");
+        System.out.println("Physical Skills:");
+        for(Skill skill : skillBox.getSkillIndex()){
+            if(skill.getOwned()&&skill.getSkillType()==1){
+                System.out.println(skill);
+            }
+        }
+        System.out.println("Focus Skills:");
+        for(Skill skill : skillBox.getSkillIndex()){
+            if(skill.getOwned()&&skill.getSkillType()==2){
+                System.out.println(skill);
+            }
+        }
+    }
+
 
 }
 

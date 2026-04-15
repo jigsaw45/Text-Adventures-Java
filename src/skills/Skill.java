@@ -5,18 +5,21 @@ public class Skill {
     private int basePower;
     private int staminaCost;
     private int skillType;
+    private boolean owned;
 
     public Skill(){
-        this.name = "empty";
-        this.basePower = 0;
-        this.staminaCost = 0;
+        this.name = "Hopeful punch";
+        this.basePower = 5;
+        this.staminaCost = 5;
         this.skillType = 1;
+        this.owned = false;
     }
     public Skill(String name, int basePower, int staminaCost, int skillType){
         this.name = name;
         this.basePower=basePower;
         this.staminaCost = staminaCost;
         this.skillType = skillType;
+        this.owned = false;
     }
 
     public String getName() {
@@ -31,9 +34,13 @@ public class Skill {
     public int getSkillType(){
         return skillType;
     }
+    public boolean getOwned(){return owned;}
 
     public void setBasePower(int basePower) {
         this.basePower = basePower;
+    }
+    public void setOwned(boolean isOwned){
+        this.owned = isOwned;
     }
 
     @Override

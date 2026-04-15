@@ -36,9 +36,12 @@ public class Player {
     public void levelUp(){
         this.playerStats.increaseLevel(1);
         this.playerStats.increasePoints(5);
+
     }
     public SkillLoadout getSkillLoadout(){
         return skillLoadout;
     }
+
+
 
 }

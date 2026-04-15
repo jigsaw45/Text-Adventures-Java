@@ -48,10 +48,11 @@ public class Game {
         //skill loadouts
         skillBox = new SkillBox();
         playerSkillLoadout = new SkillLoadout(
-                skillBox.getSkillIndex()[0],
-                skillBox.getSkillIndex()[1],
-                skillBox.getSkillIndex()[2],
-                skillBox.getSkillIndex()[3]);
+                new Skill(),
+                new Skill(),
+                skillBox.getSkillIndex()[8],
+                new Skill());
+        skillBox.getSkillIndex()[8].setOwned(true);
         gorlockSkillLoadout = new SkillLoadout(
                 skillBox.getSkillIndex()[6],
                 skillBox.getSkillIndex()[7],
@@ -61,8 +62,12 @@ public class Game {
         player = new Player("player", r1, playerSkillLoadout);
         //enemy
         enemyAI = new EnemyAI();
-        enemyGorlock = new Enemy("Gorlock",10,10,10,10,10,10,10, gorlockSkillLoadout);
-
+        enemyGorlock = new Enemy("Gorlock",15,10,10,10,20,10,20, gorlockSkillLoadout);
+        player.levelUp();
+        player.levelUp();
+        player.levelUp();
+        player.levelUp();
+        player.levelUp();
     }
 
     public void start() {
@@ -97,6 +102,9 @@ public class Game {
             case "stats":
                 statMenu();
                 break;
+            case "skills":
+                textUI.skillBookUnlockMenu(skillBox);
+                break;
             case "help":
                 System.out.println("Look, go, move, stats, help, quit");
             case "quit":
@@ -118,6 +126,10 @@ public class Game {
     }
     //Menu methods -----------------------------------------------------------------------------------------------------
 
+    //unlock skills
+    public void unlockSkillMenu(){
+
+    }
     //Stat investment Methods
     public boolean investInStat(int statChoice){
         int amount = Integer.MAX_VALUE;
@@ -132,10 +144,12 @@ public class Game {
                 case 1:
                     stat="Vitality";
                     player.getStats().increaseVitality(amount);
+                    player.getStats().recoverHP();
                     break;
                 case 2:
                     stat="Stamina";
                     player.getStats().increaseStamina(amount);
+                    player.getStats().recoverStamina();
                     break;
                 case 3:
                     stat="Strength";
@@ -282,9 +296,5 @@ public class Game {
                 sleep(1);
             }
         }
-
-
-
-
     }
 }

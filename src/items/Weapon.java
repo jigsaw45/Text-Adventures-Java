@@ -10,6 +10,7 @@ public class Weapon extends Item {
         // super imports values
         this.damage = damage;
         this.type = type;
+
     }
 
     public int getDamage() {
