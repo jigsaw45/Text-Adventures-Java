@@ -5,6 +5,8 @@ import items.Item;
 import items.Weapon;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 
 public class Inventory {
     private ArrayList<Item> items;
@@ -45,5 +47,25 @@ public class Inventory {
 
         }
     }
+    public int sortAndSearchName(String input){
+        items.sort(Comparator.comparing(Item::getName));
+
+        int low = 0;
+        int high = items.size() - 1;
+
+        while (low <= high) {
+            int middle = (low + high) / 2;
+
+            int compare = items.get(middle).getName().compareTo(input);
+
+            if (compare == 0)
+                return middle;
+            else if (compare > 0)
+                high = middle - 1;
+            else
+                low = middle + 1;
+        }
+        return -1;
+    }
 }
-//this makes it so if type is in displayInventory it prints
+

@@ -38,25 +38,4 @@ public class SkillBox {
         return SKILLINDEX;
     }
 
-    public void searchByName(String name){
-
-    }
-    public int searchByDamage(int basePower) {
-        int low = 0;
-        int high = SKILLINDEX.length - 1;
-        while (low < high) {
-            int middle = (low + high) / 2;
-            if (SKILLINDEX[middle].getBasePower() == basePower)
-                return middle;
-            else if (SKILLINDEX[middle].getBasePower() > basePower)
-                high = middle - 1;
-            else {
-                low = middle + 1;
-            }
-        }
-        return -1;
-    }
-    public void searchByType(int type){
-
-    }
 }
