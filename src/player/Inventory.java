@@ -44,7 +44,6 @@ public class Inventory {
             } else if (item instanceof Weapon && ((Weapon) item).getType().equalsIgnoreCase(type)) {
                 System.out.println(item.toString());
             }
-
         }
     }
     public int sortAndSearchName(String input){

@@ -1,5 +1,8 @@
 package combat;
 
+import player.Realm;
+import player.RealmSystem;
+
 public class Stats {
     private int vitality;
     private int strength;
@@ -8,13 +11,14 @@ public class Stats {
     private int stamina;
     private int mastery;
     private int momentum;
-    private int level;
-    private int xp;
+    private Realm currentRealm;
+    private int currentStage;
     private int points;
     private int currentHP;
     private int currentStamina;
+    private int realmSystem;
 
-    public Stats(int vitality, int strength, int agility, int focus, int stamina, int mastery,  int level){
+    public Stats(int vitality, int strength, int agility, int focus, int stamina, int mastery, Realm currentRealm, int currentStage){
         this.vitality = vitality;
         this.strength = strength;
         this.agility = agility;
@@ -22,16 +26,22 @@ public class Stats {
         this.stamina = stamina;
         this.mastery = mastery;
         this.momentum = 0;
-        this.level = level;
-        this.xp = 0;
+        this.currentRealm = currentRealm;
+        this.currentStage = currentStage;
         this.points = 0;
         this.currentHP = getMaxHP();
         this.currentStamina = getMaxStamina();
+        this.realmSystem = ;
     }
+
+
+    // link realms up to combat calculations and input realms system int each stats
+
+
 
     //derived values
     public int getMaxHP(){
-        return (this.vitality*10) + (getLevel()*5);
+        return (this.vitality*10) + (g()*5);
     }
     public int getMaxStamina(){
         return (this.stamina*15)+(getLevel()*5);
@@ -102,21 +112,24 @@ public class Stats {
         this.mastery+=amount;
     }
 
-    //Level, XP, & points
-    public int getLevel(){
-        return this.level;
+    //Realms, stages, & points
+    public Realm getcurrentRealm(){
+        return this.currentRealm;
     }
-    public int getXp(){
-        return this.xp;
+    public int getCurrentStage(){
+        return this.currentStage;
+    }
+    public int getTotalStages(){
+        return
     }
     public int getPoints(){
         return this.points;
     }
-    public void increaseLevel(int amount){
-        this.level+=amount;
+    public void increaseRealm(RealmSystem realmSystem){this.currentRealm = RealmSystem.getREALMS()[realmSystem.findRealmIndex(currentRealm)+1];
     }
-    public void increaseXp(int amount){
-        this.xp+=amount;
+    public void increaseStage(int amount){
+        this.currentStage+=amount;
+        increasePoints(5);
     }
     public void increasePoints(int amount){
         this.points+=amount;
