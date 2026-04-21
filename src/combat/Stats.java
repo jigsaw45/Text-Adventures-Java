@@ -16,7 +16,8 @@ public class Stats {
     private int points;
     private int currentHP;
     private int currentStamina;
-    private int realmSystem;
+    private RealmSystem realmSystem;
+    private int currentxp;
 
     public Stats(int vitality, int strength, int agility, int focus, int stamina, int mastery, Realm currentRealm, int currentStage){
         this.vitality = vitality;
@@ -31,30 +32,30 @@ public class Stats {
         this.points = 0;
         this.currentHP = getMaxHP();
         this.currentStamina = getMaxStamina();
-        this.realmSystem = ;
+        this.realmSystem = new RealmSystem();
     }
 
 
-    // link realms up to combat calculations and input realms system int each stats
+    //when enemy dies add player.getStats().addXP(enemy.getStats().getXPReward());
 
 
 
     //derived values
     public int getMaxHP(){
-        return (this.vitality*10) + (g()*5);
+        return (this.vitality*10) + (getTotalStages()*5);
     }
     public int getMaxStamina(){
-        return (this.stamina*15)+(getLevel()*5);
+        return (this.stamina*15)+(getTotalStages()*5);
     }
     public int getPhysicalDamage(){
         return (this.strength*2)+Math.toIntExact(Math.round(0.6*(this.agility)));
     }
     public int getDodgeChance(){
-        if(((int) (this.agility * .5) + getLevel()* .2 )>90){
+        if(((int) (this.agility * .5) + getTotalStages()* .2 )>90){
             return 90;
         }
         else{
-            return (int) ((this.agility * .5) + getLevel()* .2);
+            return (int) ((this.agility * .5) + getTotalStages()* .2);
         }
     }
     public int getElementalDamage(){
@@ -70,6 +71,12 @@ public class Stats {
     }
     public int getDefence(){
         return this.vitality+10;
+    }
+    public int getRequiredXP() {
+        return 100 + (getTotalStages() * 50);
+    }
+    public int getXPReward() {
+        return 20 + (getTotalStages() * 10);
     }
 
     //base stats
@@ -120,20 +127,34 @@ public class Stats {
         return this.currentStage;
     }
     public int getTotalStages(){
-        return
+        return realmSystem.findRealmIndex(this.currentRealm)*9 + this.currentStage;
     }
+    public int getCurrentXP() { return this.currentxp; }
     public int getPoints(){
         return this.points;
     }
-    public void increaseRealm(RealmSystem realmSystem){this.currentRealm = RealmSystem.getREALMS()[realmSystem.findRealmIndex(currentRealm)+1];
+    public void increaseRealm(){this.currentRealm = RealmSystem.getREALMS()[realmSystem.findRealmIndex(currentRealm)+1];
     }
-    public void increaseStage(int amount){
-        this.currentStage+=amount;
+    public void increaseStage(){
+        this.currentStage+=1;
         increasePoints(5);
+        if(currentStage==9){
+            increaseRealm();
+            currentStage=1;
+        }
     }
     public void increasePoints(int amount){
         this.points+=amount;
     }
+    public void increaseXP(int amount) {
+        this.currentxp += amount;
+        if (this.currentxp >= getRequiredXP()) {
+            this.currentxp -= getRequiredXP();
+            increaseStage();
+        }
+    }
+
+
 
     //Combat engine/damage calculation components
     public int getMomentum(){

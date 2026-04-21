@@ -29,6 +29,14 @@ public class Inventory {
     public void addItem(String name, int quantity, int damage, String type, String description) {
         items.add(new Weapon(name, quantity, damage, type, description));
     }
+    public void removeItem(Item item){
+        int itemIndex = sortAndSearchName(item.getName());
+        if(itemIndex != -1){
+            items.remove(itemIndex);
+        }else{
+            System.out.println("you do not have item "+item.getName()+"!");
+        }
+    }
 
     public void displayInventory() {
         for (Item item : items) {

@@ -16,7 +16,7 @@ public class Player {
     public Player(String name, Room startingRoom, SkillLoadout skillLoadout){
         this.name = name;
         this.currentRoom = startingRoom;
-        this.playerStats = new Stats(10,10,10,10,100,10,1);
+        this.playerStats = new Stats(10,10,10,10,100,10,RealmSystem.getREALMS()[0],1 );
         this.skillLoadout = skillLoadout;
         this.inventory = new Inventory();
     }
@@ -32,11 +32,6 @@ public class Player {
     }
     public String getName(){
         return this.name;
-    }
-    public void levelUp(){
-        this.playerStats.increaseLevel(1);
-        this.playerStats.increasePoints(5);
-
     }
     public SkillLoadout getSkillLoadout(){
         return skillLoadout;

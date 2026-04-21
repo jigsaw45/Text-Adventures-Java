@@ -8,6 +8,8 @@ import io.Command;
 import io.CommandParser;
 import io.TextUI;
 import player.Player;
+import player.Realm;
+import player.RealmSystem;
 import skills.Skill;
 import skills.SkillBox;
 import skills.SkillLoadout;
@@ -62,12 +64,12 @@ public class Game {
         player = new Player("player", r1, playerSkillLoadout);
         //enemy
         enemyAI = new EnemyAI();
-        enemyGorlock = new Enemy("Gorlock",15,10,10,10,20,10,20, gorlockSkillLoadout);
-        player.levelUp();
-        player.levelUp();
-        player.levelUp();
-        player.levelUp();
-        player.levelUp();
+        enemyGorlock = new Enemy("Gorlock",15,10,10,10,20,10, RealmSystem.getREALMS()[0], 2, gorlockSkillLoadout);
+        player.getStats().increaseStage();
+        player.getStats().increaseStage();
+        player.getStats().increaseStage();
+        player.getStats().increaseStage();
+        player.getStats().increaseStage();
     }
 
     public void start() {
@@ -232,6 +234,7 @@ public class Game {
             }
         }
     }
+
     //Combat Methods ---------------------------------------------------------------------------------------------------
 
     //player half of turn
