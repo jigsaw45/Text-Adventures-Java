@@ -16,8 +16,8 @@ public class Stats {
     private int points;
     private int currentHP;
     private int currentStamina;
-    private RealmSystem realmSystem;
-    private int currentxp;
+    private final RealmSystem realmSystem;
+    private int currentXP;
 
     public Stats(int vitality, int strength, int agility, int focus, int stamina, int mastery, Realm currentRealm, int currentStage){
         this.vitality = vitality;
@@ -27,12 +27,12 @@ public class Stats {
         this.stamina = stamina;
         this.mastery = mastery;
         this.momentum = 0;
+        this.realmSystem = new RealmSystem();
         this.currentRealm = currentRealm;
         this.currentStage = currentStage;
         this.points = 0;
         this.currentHP = getMaxHP();
         this.currentStamina = getMaxStamina();
-        this.realmSystem = new RealmSystem();
     }
 
 
@@ -129,7 +129,7 @@ public class Stats {
     public int getTotalStages(){
         return realmSystem.findRealmIndex(this.currentRealm)*9 + this.currentStage;
     }
-    public int getCurrentXP() { return this.currentxp; }
+    public int getCurrentXP() { return this.currentXP; }
     public int getPoints(){
         return this.points;
     }
@@ -147,9 +147,9 @@ public class Stats {
         this.points+=amount;
     }
     public void increaseXP(int amount) {
-        this.currentxp += amount;
-        if (this.currentxp >= getRequiredXP()) {
-            this.currentxp -= getRequiredXP();
+        this.currentXP += amount;
+        if (this.currentXP >= getRequiredXP()) {
+            this.currentXP -= getRequiredXP();
             increaseStage();
         }
     }

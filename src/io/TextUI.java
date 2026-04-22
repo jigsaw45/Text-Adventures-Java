@@ -11,7 +11,8 @@ public class TextUI {
     }
     public void displayPlayerStats(Player player){
         System.out.println("Name: " + player.getName() +
-                           "\nLevel: " + player.getStats().getLevel() +
+                           "\nRealm: " + player.getStats().getcurrentRealm().getName() +
+                           "\nStage: " + player.getStats().getCurrentStage() +
                            "\nMaxHP: " + player.getStats().getMaxHP() +
                            "\nMaxStamina: "+ player.getStats().getMaxStamina() +
                            "\nAvailable points: " + player.getStats().getPoints() +

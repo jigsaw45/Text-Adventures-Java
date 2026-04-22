@@ -33,6 +33,7 @@ public class Game {
     private SkillLoadout playerSkillLoadout;
     private SkillLoadout gorlockSkillLoadout;
     private EnemyAI enemyAI;
+    private RealmSystem realmSystem;
 
     public Game(){
         setupworld();
@@ -43,6 +44,7 @@ public class Game {
         //misc setups
         textUI = new TextUI();
         combatEngine = new CombatEngine();
+        realmSystem = new RealmSystem();
         //rooms
         world.Room r1 = new Room("room 1", "this is room 1");
         world.Room r2 = new Room("room 2", "this is room 2");

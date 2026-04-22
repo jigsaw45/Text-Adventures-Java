@@ -6,7 +6,7 @@ public class RealmSystem {
 
     private static final Realm[] REALMS = new Realm[18];
 
-    public RealmSystem(){
+    static{
         REALMS[0] = new Realm("Qi refining",9);
         REALMS[1] = new Realm("Foundation establishment",9);
         REALMS[2] = new Realm("Core Formation",9);
