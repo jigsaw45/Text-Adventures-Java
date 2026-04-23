@@ -146,7 +146,7 @@ public class Stats {
     public void increasePoints(int amount){
         this.points+=amount;
     }
-    public void increaseXP(int amount) {
+    public void increaseXp(int amount) {
         this.currentXP += amount;
         if (this.currentXP >= getRequiredXP()) {
             this.currentXP -= getRequiredXP();
@@ -201,7 +201,5 @@ public class Stats {
     public boolean canAffordStamina(int cost){
         return cost <= this.currentStamina;
     }
-
-
 
 }

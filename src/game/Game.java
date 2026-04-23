@@ -16,6 +16,7 @@ import skills.SkillLoadout;
 import world.Room;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Game {
@@ -109,8 +110,12 @@ public class Game {
             case "skills":
                 textUI.skillBookUnlockMenu(skillBox);
                 break;
+            case "train":
+                cultivate();
+                break;
             case "help":
                 System.out.println("Look, go, move, stats, help, quit");
+                break;
             case "quit":
                 running = false;
                 System.out.println("Goodbye.");
@@ -130,6 +135,27 @@ public class Game {
     }
     //Menu methods -----------------------------------------------------------------------------------------------------
 
+    //Cultivate
+    public void cultivate(Player player){
+        System.out.println("Do you want to start cultivating?\n" +
+                "(1)Yes\n" +
+                "(2)No");
+        String choice = scanner.nextLine();
+        if(Objects.equals(choice, "1")){
+            int xpPerDay = 10 + (player.getStats().getTotalStages() * 2);
+            System.out.println("How many days do you want to cultivate for:");
+                    int amount = scanner.nextInt();
+                    for(int i =0;i<amount;i++){
+                        for(int j=0;j<5;j++){
+                            System.out.print(".");
+                        }
+                        sleep(2);
+                        System.out.println("You have been cultivating for "+(i+1)+"days");
+                        player.getStats().increaseXp(xpPerDay);
+                    }
+
+        }
+    }
     //unlock skills
     public void unlockSkillMenu(){
 
