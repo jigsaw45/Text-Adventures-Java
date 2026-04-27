@@ -111,10 +111,10 @@ public class Game {
                 textUI.skillBookUnlockMenu(skillBox);
                 break;
             case "train":
-                cultivate();
+                cultivate(player);
                 break;
             case "help":
-                System.out.println("Look, go, move, stats, help, quit");
+                System.out.println("Look, go, move, stats, train, help, quit");
                 break;
             case "quit":
                 running = false;
@@ -148,9 +148,10 @@ public class Game {
                     for(int i =0;i<amount;i++){
                         for(int j=0;j<5;j++){
                             System.out.print(".");
+                            sleep(0.4);
                         }
-                        sleep(2);
-                        System.out.println("You have been cultivating for "+(i+1)+"days");
+                        sleep(0.2);
+                        System.out.println("You have been cultivating for "+(i+1)+" days");
                         player.getStats().increaseXp(xpPerDay);
                     }
 
