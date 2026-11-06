@@ -1,6 +1,5 @@
 package enemy;
 
-import player.Player;
 import skills.Skill;
 
 import java.util.ArrayList;
@@ -27,10 +26,10 @@ public class EnemyAI {
             }
         }
         //if enemy has max stamina do the highest damaging Skills else do a random one
-        if(enemy.getStats().getCurrentStamina()==enemy.getStats().getMaxStamina()){
+        if(affordableSkills.isEmpty() || enemy.getStats().getCurrentStamina()==enemy.getStats().getMaxStamina()){
             return highestDamage;
         } else{
-            return(affordableSkills.get((int)(Math.random()*((affordableSkills.size()-1)+1))));
+            return affordableSkills.get((int)(Math.random()*affordableSkills.size()));
         }
     }
 }
