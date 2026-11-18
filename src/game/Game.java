@@ -19,6 +19,7 @@ import items.Item;
 import items.ItemFactory;
 import items.Manual;
 import items.Pill;
+import items.Token;
 import items.Weapon;
 import player.Player;
 import player.RealmSystem;
@@ -196,6 +197,9 @@ public class Game {
             case "eat":
                 useItem(noun);
                 break;
+            case "read":
+                readItem(noun);
+                break;
             case "shop":
             case "store":
                 shop();
@@ -263,7 +267,7 @@ public class Game {
         textUI.banner("Commands");
         textUI.print("look, go <direction>, talk <name>, search, take <item>, drop <item>");
         textUI.print("inventory, quests, fight [enemy], train, stats, status, skills, equip <index> <slot>");
-        textUI.print("use <item>, shop, buy <item>, sell <item>, breakthrough, rest, save, load, quit");
+        textUI.print("use <item>, read <item>, shop, buy <item>, sell <item>, breakthrough, rest, save, load, quit");
     }
 
     //Movement and rooms -----------------------------------------------------------------------------------------------
@@ -721,7 +725,40 @@ public class Game {
             return;
         }
 
+        if(item instanceof Token){
+            readItem(itemName);
+            return;
+        }
+
         textUI.print("Nothing happens. The item remains disappointed.");
+    }
+
+    //letters and manuals are read rather than used
+    private void readItem(String itemName){
+        if(itemName.isEmpty()){
+            textUI.print("Read what?");
+            return;
+        }
+        Item item = player.getInventory().getItem(itemName);
+        if(item == null){
+            textUI.print("You do not have " + itemName + ".");
+            return;
+        }
+
+        if(item instanceof Manual){
+            useItem(itemName);
+            return;
+        }
+
+        if(item instanceof Token && ((Token) item).getType().equalsIgnoreCase("letter")){
+            textUI.banner("The Old Letter");
+            textUI.print("Most of it is ash. What survives reads:");
+            textUI.print("\"...the lotus blooms where the water is sweetest. Burn the rest.\"");
+            textUI.print("The signature is gone. The paper smells faintly of iron.");
+            return;
+        }
+
+        textUI.print("There is nothing written on the " + item.getName() + ".");
     }
 
     //the Azure Cloud Manual decides your element
