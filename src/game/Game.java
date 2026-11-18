@@ -161,6 +161,10 @@ public class Game {
             case "drop":
                 dropItem(noun);
                 break;
+            case "give":
+            case "offer":
+                give(noun);
+                break;
             case "inventory":
             case "inv":
             case "i":
@@ -265,7 +269,7 @@ public class Game {
 
     private void help(){
         textUI.banner("Commands");
-        textUI.print("look, go <direction>, talk <name>, search, take <item>, drop <item>");
+        textUI.print("look, go <direction>, talk <name>, search, take <item>, drop <item>, give <item> to <name>");
         textUI.print("inventory, quests, fight [enemy], train, stats, status, skills, equip <index> <slot>");
         textUI.print("use <item>, read <item>, shop, buy <item>, sell <item>, breakthrough, rest, save, load, quit");
     }
@@ -366,6 +370,71 @@ public class Game {
                 textUI.print("Go Ha-Jin steps onto the practice mat. Type 'fight go ha-jin'.");
             }
         }
+        if(npc.getName().equalsIgnoreCase("Little Beggar") && !flags.contains("beggarPaid")){
+            textUI.print("(He is clearly waiting for a coin. Try: give 5 stones to beggar)");
+        }
+    }
+
+    //gifts, mostly to see whether the beggar is worth listening to
+    private void give(String args){
+        if(args.isEmpty() || !args.toLowerCase().contains(" to ")){
+            textUI.print("Usage: give <amount> stones to <name>, or give <item> to <name>");
+            return;
+        }
+        String[] parts = args.split("(?i)\\s+to\\s+", 2);
+        String gift = parts[0].trim();
+        String target = parts[1].trim();
+
+        Npc npc = player.getCurrentRoom().getNpc(target);
+        if(npc == null){
+            textUI.print("No one called " + target + " here.");
+            return;
+        }
+
+        if(npc.getName().equalsIgnoreCase("Little Beggar")){
+            beggarGift(gift);
+            return;
+        }
+        textUI.print(npc.getName() + " politely declines. The sect frowns on bribery, officially.");
+    }
+
+    private void beggarGift(String gift){
+        String lower = gift.toLowerCase();
+        boolean coin = lower.contains("stone") || lower.matches("[0-9]+");
+        int paid = 0;
+
+        if(coin){
+            String digits = gift.replaceAll("[^0-9]", "");
+            paid = digits.isEmpty() ? 5 : parseIntSafe(digits);
+            if(paid <= 0){
+                textUI.print("A gift of nothing is still a gift. He is not impressed.");
+                return;
+            }
+            if(!player.spendSpiritStones(paid)){
+                textUI.print("You do not have " + paid + " spirit stones.");
+                return;
+            }
+        }else{
+            Item item = player.getInventory().getItem(gift);
+            if(item == null){
+                textUI.print("You do not have " + gift + ".");
+                return;
+            }
+            player.getInventory().removeItem(gift, 1);
+        }
+
+        if(flags.contains("beggarPaid")){
+            textUI.print("The beggar pockets it and repeats himself. Information is a subscription.");
+            return;
+        }
+
+        flags.add("beggarPaid");
+        textUI.print("The beggar bites the coin, nods, and leans in.");
+        textUI.print("\"Masked men come down this path at night. Boots too clean for bandits.\"");
+        textUI.print("\"They meet at the gate when the moon is thin. And they always buy bamboo shoots.\"");
+        textUI.print("You feel worldly. +10 XP.");
+        player.getStats().increaseXp(10);
+        giveItem("Bamboo Shoot");
     }
 
     private void offerQuest(Npc npc, Quest quest){
