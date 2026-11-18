@@ -5,7 +5,6 @@ import items.Item;
 import items.Weapon;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 
 public class Inventory {
@@ -18,27 +17,79 @@ public class Inventory {
     }
 
     public void addItem(Item item) {
+        //stack anything with the same name and class instead of adding clones
+        for(Item existing : items){
+            if(existing.getName().equalsIgnoreCase(item.getName()) && existing.getClass() == item.getClass()){
+                existing.addQuantity(item.getQuantity());
+                return;
+            }
+        }
         items.add(item);
-        //adds item to arrayList
     }
 
     public void addItem(String name, int quantity, String type, String description) {
-        items.add(new Fruit(name, quantity, type, description));
+        addItem(new Fruit(name, quantity, type, description));
     }
 
     public void addItem(String name, int quantity, int damage, String type, String description) {
-        items.add(new Weapon(name, quantity, damage, type, description));
+        addItem(new Weapon(name, quantity, damage, type, description));
     }
+
+    //removes a number of an item and deletes it when the stack runs out
+    public boolean removeItem(String name, int quantity){
+        Item item = getItem(name);
+        if(item == null){
+            return false;
+        }
+        item.setQuantity(item.getQuantity() - quantity);
+        if(item.getQuantity() <= 0){
+            items.remove(item);
+        }
+        return true;
+    }
+
     public void removeItem(Item item){
-        int itemIndex = sortAndSearchName(item.getName());
-        if(itemIndex != -1){
-            items.remove(itemIndex);
+        if(items.contains(item)){
+            item.setQuantity(item.getQuantity() - 1);
+            if(item.getQuantity() <= 0){
+                items.remove(item);
+            }
         }else{
             System.out.println("you do not have item "+item.getName()+"!");
         }
     }
 
+    public Item getItem(String name){
+        for(Item item : items){
+            if(item.getName().equalsIgnoreCase(name)){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public boolean hasItem(String name){
+        return getItem(name) != null;
+    }
+
+    public int countItem(String name){
+        Item item = getItem(name);
+        return item == null ? 0 : item.getQuantity();
+    }
+
+    public ArrayList<Item> getItems(){
+        return items;
+    }
+
+    public boolean isEmpty(){
+        return items.isEmpty();
+    }
+
     public void displayInventory() {
+        if(items.isEmpty()){
+            System.out.println("Your pack is empty. Even the dust left.");
+            return;
+        }
         for (Item item : items) {
             item.displayInfo();
             //prints content of Inventory
@@ -54,25 +105,16 @@ public class Inventory {
             }
         }
     }
+
+    //kept for the inventory sorting exercise, now used only to keep the list tidy
     public int sortAndSearchName(String input){
         items.sort(Comparator.comparing(Item::getName));
 
-        int low = 0;
-        int high = items.size() - 1;
-
-        while (low <= high) {
-            int middle = (low + high) / 2;
-
-            int compare = items.get(middle).getName().compareTo(input);
-
-            if (compare == 0)
-                return middle;
-            else if (compare > 0)
-                high = middle - 1;
-            else
-                low = middle + 1;
+        for(int i = 0; i < items.size(); i++){
+            if(items.get(i).getName().equalsIgnoreCase(input)){
+                return i;
+            }
         }
         return -1;
     }
 }
-

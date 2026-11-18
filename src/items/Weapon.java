@@ -6,7 +6,10 @@ public class Weapon extends Item {
     private String type;
 
     public Weapon(String name, int quantity, int damage, String type, String description) {
-        super(name, quantity, description);
+        this(name, quantity, damage, type, description, 0);
+    }
+    public Weapon(String name, int quantity, int damage, String type, String description, int value) {
+        super(name, quantity, description, value);
         // super imports values
         this.damage = damage;
         this.type = type;
@@ -22,7 +25,6 @@ public class Weapon extends Item {
     }
 
     public void displayInfo() {
-        System.out.println("items.Weapon: " + getName() + ", Quantity: " + getQuantity() + ", Damage: " + getDamage() + ", Type: " + getType());
+        System.out.println("Weapon: " + getName() + ", Quantity: " + getQuantity() + ", Damage: " + getDamage() + ", Type: " + getType());
     }
 }
-
