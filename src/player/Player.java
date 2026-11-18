@@ -41,7 +41,6 @@ public class Player {
         this.reputation.put("Tang Clan", 0);
         this.reputation.put("Black Lotus Society", 0);
     }
-
     public world.Room getCurrentRoom(){
         return currentRoom;
     }

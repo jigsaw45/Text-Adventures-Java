@@ -77,6 +77,20 @@ public class Inventory {
         return item == null ? 0 : item.getQuantity();
     }
 
+    //used by the NPCs quest classes, counts a specific item instead of a name
+    public int itemAmount(Item item){
+        if(item == null){
+            return 0;
+        }
+        int total = 0;
+        for(Item held : items){
+            if(held.getName().equalsIgnoreCase(item.getName())){
+                total += held.getQuantity();
+            }
+        }
+        return total;
+    }
+
     public ArrayList<Item> getItems(){
         return items;
     }
