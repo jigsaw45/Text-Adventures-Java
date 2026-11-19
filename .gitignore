@@ -29,3 +29,6 @@ bin/
 .DS_Store
 ### Local saves ###
 save.txt
+
+### Build output ###
+build/
